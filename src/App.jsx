@@ -1,5 +1,4 @@
 import './App.css'
-import Speedrun from './components/speedrun.jsx'
 import Nav from './components/Nav.jsx'
 import DailySet from './pages/DailySet.jsx'
 import Home from './pages/Home.jsx'
