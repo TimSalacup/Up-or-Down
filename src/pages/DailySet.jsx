@@ -2,18 +2,22 @@ import { useEffect, useState } from 'react'
 import Feedback from '../components/Feedback.jsx'
 
 export default function DailySet () {
+  const [QuestionBank, setQuestionBank] = useState([])
+  const [questionNumber, setQuestionNumber] = useState(1)
+  const [attempts, setAttempts] = useState(0)
+  const [currentQuestion, setCurrentQuestion] = useState(
+    QuestionBank[questionNumber - 1]?.text
+  )
+  const [guessValues, setGuessValues] = useState([])
 
-const [QuestionBank, setQuestionBank] = useState([])
-const [questionNumber, setQuestionNumber] = useState(1)
-const [attempts, setAttempts] = useState(0)
-const [currentQuestion, setCurrentQuestion] = useState(
-  QuestionBank[questionNumber - 1]?.text
-)
-const [guessValues, setGuessValues] = useState([])
+  // temporary
+  const [restart, setRestart] = useState(false)
 
-useEffect(() => {
-  getRandomFacts()
-}, [])
+  useEffect(() => {
+    getRandomFacts()
+    document.getElementById('leaderboards-button').classList.add('hidden')
+    document.getElementById('restart-button').classList.add('hidden')
+  }, [restart])
 
   async function getRandomFacts () {
     const requests = Array.from({ length: 5 }, () =>
@@ -24,31 +28,58 @@ useEffect(() => {
           throw new Error('API request failed')
         }
 
+        setRestart(false);
         return response.json()
       })
     )
     const facts = await Promise.all(requests)
-    setQuestionBank(facts);
+    setQuestionBank(facts)
   }
 
-
   useEffect(() => {
-    setCurrentQuestion(QuestionBank[questionNumber - 1]?.text.slice(QuestionBank[questionNumber - 1]?.text.indexOf("the"))),
-      [questionNumber]
-  })
+    displayQuestion()
+  }, [questionNumber, QuestionBank])
 
+  const displayQuestion = () => {
+    setAttempts(0)
+    setCurrentQuestion(
+      QuestionBank[questionNumber - 1]?.text.slice(
+        QuestionBank[questionNumber - 1]?.text.indexOf('the')
+      )
+    )
+  }
+
+  //function to handle the guess input and check if it matches the answer
   function guess () {
     const guessInput = document.getElementById('guess')
     let guessValue = parseFloat(guessInput.value)
     const failureMessage = document.getElementById('failureMessage')
 
-    if (guessValue === QuestionBank[questionNumber - 1].number) {
-      setAttempts(0)
+    //check if the guess is correct
+    if (
+      guessValue === QuestionBank[questionNumber - 1].number &&
+      questionNumber === 5
+    ) {
+      document.getElementById('leaderboards-button').classList.remove('hidden')
+      document.getElementById('restart-button').classList.remove('hidden')
+    } else if (guessValue === QuestionBank[questionNumber - 1].number) {
       setGuessValues([])
       guessInput.value = ''
       setQuestionNumber(prev => prev + 1)
     } else {
       if (
+        attempts === 4 &&
+        guessValue !== QuestionBank[questionNumber - 1].number && questionNumber === 5
+      ) {
+        setGuessValues(prev => [...prev, guessValue])
+        setAttempts(prev => prev + 1)
+        failureMessage.textContent += `You have reached the maximum number of attempts. The correct answer was: ${
+          QuestionBank[questionNumber - 1].number
+        }`
+        document.getElementById('leaderboards-button').classList.remove('hidden')
+        document.getElementById('restart-button').classList.remove('hidden')
+      }
+      else if (
         attempts === 4 &&
         guessValue !== QuestionBank[questionNumber - 1].number
       ) {
@@ -132,22 +163,48 @@ useEffect(() => {
             )
           })}
         </div>
-        <button
-          id='failed-button'
-          className='hidden bg-black text-white px-6 rounded-xl font-bold cursor-pointer hover:bg-gray-800 transition-colors'
-          onClick={() => {
-            setAttempts(0)
-            setQuestionNumber(prev => prev + 1)
-            document.getElementById('failed-button').classList.add('hidden')
-            document.getElementById('failureMessage').textContent = ''
-            setCurrentQuestion(QuestionBank[questionNumber].text)
-            document.getElementById('guess').value = ''
-            document.getElementById('Daily-Set__bottom').innerHTML = ''
-            guessInput.value = ''
-          }}
+        <div
+          id='Daily-Set__bottom--buttons'
+          className='flex items-center justify-center gap-4 mt-4'
         >
-          Next Question
-        </button>
+          <button
+            id='failed-button'
+            className='hidden bg-black text-white px-6 py-3 rounded-xl font-bold cursor-pointer hover:bg-gray-800 transition-colors'
+            onClick={() => {
+              setAttempts(0)
+              setQuestionNumber(prev => prev + 1)
+              document.getElementById('failed-button').classList.add('hidden')
+              document.getElementById('failureMessage').textContent = ''
+              setCurrentQuestion(QuestionBank[questionNumber].text)
+              document.getElementById('guess').value = ''
+              setGuessValues([])
+            }}
+          >
+            Next Question
+          </button>
+          <button
+            id='restart-button'
+            className='hidden bg-black text-white px-6 py-3 rounded-xl font-bold cursor-pointer hover:bg-gray-800 transition-colors'
+            onClick={() => {
+              setRestart(true)
+              setAttempts(0)
+              setQuestionNumber(1)
+              document.getElementById('failed-button').classList.add('hidden')
+              document.getElementById('failureMessage').textContent = ''
+              document.getElementById('guess').value = ''
+              setGuessValues([])
+            }}
+          >
+            Restart
+          </button>
+          <button
+            id='leaderboards-button'
+            className='hidden bg-black text-white px-6 py-3 rounded-xl font-bold hover:bg-gray-800 transition-colors cursor-not-allowed'
+            onClick={() => {}}
+          >
+            To leaderboards
+          </button>
+        </div>
       </div>
     </main>
   )

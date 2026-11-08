@@ -7,7 +7,7 @@ export default function Home() {
         id='main-wrapper'
         className='flex justify-between mt-24 flex-col items-center gap-8'
         >
-        <div id='game-card' className='cursor-pointer game-card hover:scale-[1.02] transition-transform duration-300'>
+        <div id='game-card' className='cursor-not-allowed game-card hover:scale-[1.02] transition-transform duration-300'>
             <div id='game-card--top'>
             <h1 className='text-6xl font-bold mb-4'>
                 Daily Puzzle&nbsp;&nbsp;<i className='fa-solid fa-puzzle-piece'></i>

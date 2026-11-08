@@ -8,6 +8,8 @@ export default function Speedrun ({DropDown, HideDropDown}) {
             className='relative flex justify-between py-2 z-10'
           >
             <div id='nav-left' className='flex items-center gap-10'>
+              <Link to='/' className='text-3xl font-bold text-white'>
+
               <h1 className='group text-xl font-bold cursor-pointer text-white'>
                 <i className='fa-solid fa-up-down text-xl text-[rgb(230,230,230)]'></i>&nbsp;&nbsp;
                 {/* HIGHER — Green, bottom to top */}
@@ -44,6 +46,7 @@ export default function Speedrun ({DropDown, HideDropDown}) {
                   </span>
                 </span>
               </h1>
+              </Link>
               <div
                 className='relative'
                 onMouseEnter={() => {DropDown()}}
@@ -72,15 +75,15 @@ export default function Speedrun ({DropDown, HideDropDown}) {
                 </div>
               </div>
               <h2 className='font-extrabold text-[rgb(230,230,230)]'>|</h2>
-              <h2 className='cursor-pointer font-bold text-[rgb(230,230,230)] rounded-2xl px-[12px] py-[4px] hover:bg-[rgba(180,180,180,0.2)] transition-colors duration-500'>
+              <h2 className='cursor-not-allowed font-bold text-[rgb(230,230,230)] rounded-2xl px-[12px] py-[4px] hover:bg-[rgba(180,180,180,0.2)] transition-colors duration-500'>
                 How To Play
               </h2>
             </div>
             <div id='nav-right' className='flex items-center gap-6'>
               <h2>
-                <i className='fa-solid fa-gear cursor-pointer text-2xl text-[rgb(230,230,230)] hover:rotate-180 transition-transform duration-300'></i>
+                <i className='fa-solid fa-gear cursor-not-allowed text-2xl text-[rgb(230,230,230)] hover:rotate-180 transition-transform duration-300'></i>
               </h2>
-              <h2 className='cursor-pointer px-[12px] py-[4px] bg-[rgb(230,230,230)] text-black rounded-2xl font-bold hover:bg-[rgba(230,230,230,0.8)] transition-colors duration-300'>
+              <h2 className='cursor-not-allowed px-[12px] py-[4px] bg-[rgb(230,230,230)] text-black rounded-2xl font-bold hover:bg-[rgba(230,230,230,0.8)] transition-colors duration-300'>
                 Sign Up
               </h2>
             </div>

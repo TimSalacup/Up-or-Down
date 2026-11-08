@@ -2,7 +2,7 @@ import moviesImage from '../assets/movies.jpg'
 
 export default function Speedrun () {
   return (
-    <div className='game-card relative overflow-hidden cursor-pointer hover:scale-[1.02] transition-transform duration-300'>
+    <div className='game-card relative overflow-hidden cursor-not-allowed hover:scale-[1.02] transition-transform duration-300'>
       {/* Right side: Diagonal image */}
       <img
         src={moviesImage}
@@ -23,7 +23,7 @@ export default function Speedrun () {
           <h2 className='font-bold mt-4'>Today's Theme: Movies</h2>
           <button
             id='game-card--play'
-            className='bg-black text-[rgb(230,230,230)] py-2 rounded-4xl font-bold cursor-pointer w-[128px] text-xl mt-4'
+            className='bg-black text-[rgb(230,230,230)] py-2 rounded-4xl font-bold cursor-not-allowed w-[128px] text-xl mt-4'
           >
             Play
           </button>
