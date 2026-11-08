@@ -61,15 +61,15 @@ export default function Speedrun ({DropDown, HideDropDown}) {
                 </h2>
                 <div
                   id='nav-dropdown'
-                  className='-z-10 absolute flex flex-col content-center items-center gap-4 bg-[rgb(230,230,230)] px-4 py-2 rounded-2xl shadow-[0_35px_60px_-15px_rgba(0,0,0,0.5)] transform -translate-x-1/2 left-1/2 top-[calc(100%+16px)] transition-all duration-300 hide'
+                  className='-z-10 absolute flex flex-col content-center items-center gap-4 bg-[rgb(230,230,230)] px-4 py-2 rounded-2xl shadow-[0_35px_60px_-15px_rgba(0,0,0,0.5)] transform -translate-x-1/2 left-1/2 top-[calc(100%+16px)] transition-all duration-300 hide w-[160px] text-center'
                 >
-                  <Link to ='/daily_set' className='text-black'>
-                    Puzzle
+                  <Link to ='/' className='text-black cursor-not-allowed'>
+                   Daily Puzzle
                   </Link>
                   <Link to ='/daily_set' className='text-black'>
-                    Daily
+                    Daily Set
                   </Link>
-                  <Link to ='/daily_set' className='text-black'>
+                  <Link to ='/' className='text-black cursor-not-allowed'>
                     Speedrun
                   </Link>
                 </div>

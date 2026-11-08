@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import Speedrun from '../components/speedrun.jsx'
 
 export default function Home() {
@@ -23,7 +24,8 @@ export default function Home() {
             Play
             </button>
         </div>
-        <div id='game-card' className='cursor-pointer game-card hover:scale-[1.02] transition-transform duration-300'>
+        <Link to='/daily_set' className='cursor-pointer w-19/20'>
+        <div id='game-card' className='cursor-pointer game-card w-[100%] hover:scale-[1.02] transition-transform duration-300'>
             <div id='game-card--top'>
             <h1 className='text-6xl font-bold mb-4'>
                 Daily Set&nbsp;&nbsp;<i className='fa-solid fa-calendar'></i>
@@ -37,7 +39,8 @@ export default function Home() {
             Play
             </button>
         </div>
-        <Speedrun />
+        </Link>
+    <Speedrun />
         </div>
     </main>
   )
