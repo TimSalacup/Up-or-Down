@@ -21,7 +21,7 @@ export default function DailySet () {
 
   async function getRandomFacts () {
     const requests = Array.from({ length: 5 }, () =>
-      fetch('http://www.number-trivia.com/random/trivia?json', {
+      fetch('https://www.number-trivia.com/random/trivia?json', {
         cache: 'no-store'
       }).then(response => {
         if (!response.ok) {
