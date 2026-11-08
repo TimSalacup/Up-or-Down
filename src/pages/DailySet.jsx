@@ -20,20 +20,26 @@ export default function DailySet () {
   }, [restart])
 
   async function getRandomFacts () {
-    const requests = Array.from({ length: 5 }, () =>
-      fetch('https://www.number-trivia.com/random/trivia?json', {
-        cache: 'no-store'
-      }).then(response => {
+    try {
+      const requests = Array.from({ length: 5 }, async () => {
+        const response = await fetch('/api/facts', {
+          cache: 'no-store'
+        })
+
         if (!response.ok) {
-          throw new Error('API request failed')
+          throw new Error(`API request failed: ${response.status}`)
         }
 
-        setRestart(false);
         return response.json()
       })
-    )
-    const facts = await Promise.all(requests)
-    setQuestionBank(facts)
+
+      const facts = await Promise.all(requests)
+
+      setQuestionBank(facts)
+      setRestart(false)
+    } catch (error) {
+      console.error('Failed to load questions:', error)
+    }
   }
 
   useEffect(() => {
@@ -69,17 +75,19 @@ export default function DailySet () {
     } else {
       if (
         attempts === 4 &&
-        guessValue !== QuestionBank[questionNumber - 1].number && questionNumber === 5
+        guessValue !== QuestionBank[questionNumber - 1].number &&
+        questionNumber === 5
       ) {
         setGuessValues(prev => [...prev, guessValue])
         setAttempts(prev => prev + 1)
         failureMessage.textContent += `You have reached the maximum number of attempts. The correct answer was: ${
           QuestionBank[questionNumber - 1].number
         }`
-        document.getElementById('leaderboards-button').classList.remove('hidden')
+        document
+          .getElementById('leaderboards-button')
+          .classList.remove('hidden')
         document.getElementById('restart-button').classList.remove('hidden')
-      }
-      else if (
+      } else if (
         attempts === 4 &&
         guessValue !== QuestionBank[questionNumber - 1].number
       ) {
