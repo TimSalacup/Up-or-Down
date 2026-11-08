@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import Speedrun from '../components/speedrun.jsx'
+import Speedrun from '../components/Speedrun.jsx'
 
 export default function Home() {
   return (
